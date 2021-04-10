@@ -15,3 +15,4 @@ Time Commitment: To ensure an equal distribution of work, each member is expecte
 Before pushing code to the repository, team members will make sure that their code is working properly. By signing this contract team members acknowledge that they will provide snacks to the meeting if they push code that causes segmentation faults or does not compile. 
 
 Signatures:
+lmathes2
