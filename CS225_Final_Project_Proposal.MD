@@ -10,12 +10,14 @@ For our project we will be using the github-musue database. The leading question
 
 
 Dataset Acquisition and Processing
+
 Our data is downloaded from the Stanford Large Network Dataset. The files are in the CSV format with all of the edges in one file, and user attributes in the other file. We will use some CSV library to read in the data and to turn each user ID into a node. Each node will have information including the username of each user as well as which other nodes they are connected to. We will use this undirected graph to implement a user search feature, mutual connection finder and centrality ranker. As there are going to be some nodes that are not connected to other nodes, we will also have a central node that all nodes will be connected to, which will be used for the breadth first search but not the mutual connection finder and centrality ranker. Before we upload our data we will find discrepancies in the data and try to fix them by deleting these data points.
 
 
 
 
 Graph Algorithms
+
 User Search: We will implement a depth first search, with a goal time complexity of O(n). the input for this method will be a user ID and, the output of this function will be a pointer to the user node with all of their information. If that user ID does not exist the function will return NULL. We may put this function inside another function to print it in a cleaner way with user data.
 Mutual Connection Finder: We will implement a mutual connection finder which will use Dijkstra’s algorithm which has time complexity of, O(|E|+|V|log|V|) worst case. The inputs for this function will be the two nodes that we are trying to find the shortest path between. The output will be a list of pointers to the nodes connecting them, which is the shortest path between the two. If there is no way to get from one node to the other it will return NULL. This function may be placed within another function to print the connections in a cleaner way.
 Centrality Ranker: We will implement a betweenness centrality algorithm to rank a person's connectedness to the network the time complexity of this algorithm will be O(|V|^3) worst case. For this algorithm the inputs will be a node that you want to find the betweenness centrality of a node. This will be a void function but the function will reassign the given nodes attribute for betweenness centrality.
