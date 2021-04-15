@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include "User.h"
-#include "network.h"
+#include "Network.h"
 
 
 int main(){
