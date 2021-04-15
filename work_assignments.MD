@@ -2,7 +2,7 @@ Date:
 Nick:
 Kieth:
 Liam:
-Cesar: 
+Cesar: Create a hashmap connecting the data of the node together
 
 Week Notes:
 -make a make file
