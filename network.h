@@ -4,8 +4,10 @@
 
 
 
-class network: public{
+class Network{
     public:
+
+    Network();
 
     //PART #1
     //THIS SECTION IS FOR READING IN FILES
