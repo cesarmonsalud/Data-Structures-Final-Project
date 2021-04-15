@@ -18,6 +18,6 @@ class User: public{
     private:
     int id_; 
     std::string username_;
-    vector<*Users> connections_; 
+    vector<*User> connections_; 
     std::User central_node_; 
 }
