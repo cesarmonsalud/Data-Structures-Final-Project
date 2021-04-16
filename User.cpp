@@ -9,9 +9,12 @@
     //other constructor
     User::User(int id){
         id_ = id;
+        //assign null value for username and empty value for username
+        username_ = "";
+        central_node_ = NULL;
     }
     //even another constructor
-    User::User(int id, std::string username, User central_node){
+    User::User(int id, std::string username, User * central_node){
 
         id_ = id;
         username_ = username;
@@ -19,7 +22,7 @@
     }
 
     //adds connection to instance of User
-    void add_connection(User user){
+    void add_connection(User * user){
 
         connections_.push(user);
 

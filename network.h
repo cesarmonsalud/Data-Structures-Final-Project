@@ -1,5 +1,7 @@
+#pragma once
 #include <iostream> 
 #include <string>
+#include <unordered_map>
 #include "User.h"
 
 
@@ -35,7 +37,7 @@ class Network{
      * 1.create a node with User constructor
      * 2. add the User to id_map_
      */
-    void create_node(std::string info); //figure out what info to pass in
+    void create_user(std::string line); //figure out what info to pass in
 
     /***
      * helper function for step #3 in populate_tree()
@@ -68,17 +70,23 @@ class Network{
 
     //Part #2
     
+    /***
+     * helper function for BFS
+     * Input a node and function outputs if it has been visited
+     * 
+     */
+    bool was_visited(User* user,int level);
     
 
 
     private:
-    std::unordered_map<int,*User> id_map_;
-    std::unordered_map<*User,std::vector<bool>> user_map_;
-    User central_node_;
+    std::unordered_map<int,User*> id_map_;
+    std::unordered_map<User*,std::vector<bool>> user_map_;
+    User * central_node_;
 
     
 
 
 
 
-}
+};

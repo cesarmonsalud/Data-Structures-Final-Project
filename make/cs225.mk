@@ -14,6 +14,8 @@ CXX = clang++
 LD = clang++
 OBJS_DIR = .objs
 
+
+
 # Add standard CS 225 object files
 OBJS += cs225/HSLAPixel.o cs225/PNG.o cs225/lodepng/lodepng.o
 

@@ -1,13 +1,15 @@
+#pragma once
 #include <iostream> 
 #include <string>
+
 
 
 
 class User{
     public:
     User();
-    User(int id)
-    User(int id, std::string username, User central_node);
+    User(int id);
+    User(int id, std::string username, User * central_node);
 
     //adds connection to instance of User
     void add_connection(User user);
@@ -18,6 +20,6 @@ class User{
     private:
     int id_; 
     std::string username_;
-    vector<*User> connections_; 
-    std::User central_node_; 
-}
+    std::vector<User*> * connections_; 
+    User * central_node_; 
+};

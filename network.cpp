@@ -1,21 +1,43 @@
 #include <iostream>
 #include "User.h"
-#include "Network.h"
+#include "network.h"
 #include <string>
+#include <unordered_map>
 
 Network::Network(){
-
+    id_map_ = std::unordered_map<int,User*>();
+    user_map = std::unordered_map<User*,std::vector<bool>>();
+    central_node = User();
 }
 
-void populate_tree(std::string filename){
+void Network::populate_tree(std::string filename_target, std::string filename_edges){
+    //open csv file with user info
+
+    //while lines in csv, pass line into create node and repeat for all lines of csv
+    create_user("insert line string");//creates new node given line and adds <int id,User *user>pair to id_map_
+
+    //when finished iterating close csv file
+
+    //open csv file with user edges
+
+    //while there are still edges get a new line
+    //add_edge(13939,383839);
+
+
     return;
 }
 
 User * Network::search_by_id(int id){
-    return NULL;
+    std::unordered_map<int,User*>::const_iterator found = id_map_.find(id);
+    if(found==id_map_.end()){ //checks if the user id is not found
+        return NULL;
+    }else{
+        return found->second; //pointer to user
+    }
 }
 
-void Network::create_node(std::string info){
+void Network::create_user(std::string line){
+    //remember to add user to _id_map_
     return;
 }
 
