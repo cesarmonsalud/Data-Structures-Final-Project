@@ -2,6 +2,7 @@
 #include <iostream> 
 #include <string>
 #include <unordered_map>
+#include <vector>
 #include "User.h"
 
 
@@ -10,6 +11,7 @@ class Network{
     public:
 
     Network();
+    ~Network();
 
     //PART #1
     //THIS SECTION IS FOR READING IN FILES
@@ -30,7 +32,7 @@ class Network{
      * using the unordered_map
      * Note: figure out how to handle seperate clusers
      */
-    void populate_tree(std::string filename);
+    void populate_tree(std::string filename, std::string filename_edges);
 
     /***
      * helper function for step #2 in populate_tree()
@@ -50,14 +52,31 @@ class Network{
 
     //USER SEARCH SECTION
 
+   /***
+     * helper function for BFS_username
+     * returns if node was visited
+     * 
+     */
+    bool was_visited(User * user);
+
+    /***
+     * helper function for BFS_username
+     * marks a node as visited
+     * 
+     */
+    void new_visit(User * user, int level);
+
+
     /***
      * given a starting node and a string the function will BFS
      * through the tree and finds all users that have those letters in order in
      * the tree and return a list of the usernames in a list
      * use the user_map_ to implement the visited feature
+     * Algorithm Here: https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
      */
     std::vector<std::string> BFS_username(std::string query, User start);
 
+ 
 
     /***
      * takes the address of two connections
@@ -82,6 +101,7 @@ class Network{
     private:
     std::unordered_map<int,User*> id_map_;
     std::unordered_map<User*,std::vector<bool>> user_map_;
+    int level_ = 0;
     User * central_node_;
 
     
