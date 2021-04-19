@@ -49,7 +49,7 @@ int Network::add_edge(int id_1, int id_2){
     return 1;
 }
 
-bool Network::was_visited(User * user){
+bool Network::was_visited(User * user, int level){
     return false;
 }
 
