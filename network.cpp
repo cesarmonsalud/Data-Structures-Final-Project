@@ -16,6 +16,14 @@ Network::Network(){
 }
 
 Network::~Network(){
+
+    for (auto e : id_map_)
+    {
+        delete [] e.second;
+    }
+
+    //delete user_map_;
+    //delete id_map_;
     delete central_node_;
     //update destructor with each user
 }
@@ -67,15 +75,57 @@ void Network::print_users(){
 
 
 int Network::add_edge(int id_1, int id_2){
-    return 1;
+
+    User* User1= search_by_id(id_1); 
+    User* User2= search_by_id(id_2); 
+
+    if(User1 == NULL || User2 == NULL){
+        return -1;
+    }else{
+
+        User1->add_connection(User2);
+        User2->add_connection(User1);
+
+        return 1;
+    }
+
+    //if either node cannot be found, return -1
+   
 }
 
 bool Network::was_visited(User * user, int level){
-    return false;
+
+    std::vector<bool> Vector = user_map_[user];
+    if((int)Vector.size()<level){
+        return false;
+    }
+    if(Vector[level]==true){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 void Network::new_visit(User * user, int level){
+
+    /*cases:
+    1. Vector dont exist
+    2. Vector exists for levels smaller than current level
+    3. Vector already exists for level
+    */
+   /*
+    std::vector<bool> Vector = user_map_[user];
+    if(Vector.size()==0){
+        for(int i=0; i<level; i++){
+            Vector[i] = false;
+        }
+        Vector[level]=true;
+    }
+    else if()
+
+    Vector[level] = true;
     return;
+    */
 }
 
 std::vector<std::string> Network::BFS_username(std::string query, User start){

@@ -63,7 +63,7 @@ class Network{
      * returns if node was visited
      * 
      */
-    bool was_visited(User * user);
+    bool was_visited(User * user, int level);
 
     /***
      * helper function for BFS_username
@@ -104,14 +104,14 @@ class Network{
      * Input a node and function outputs if it has been visited
      * 
      */
-    bool was_visited(User* user,int level);
+   
     
 
 
     private:
     std::unordered_map<int,User*> id_map_;
     std::unordered_map<User*,std::vector<bool>> user_map_;
-    int level_ = 0;
+    //int level_ = 0;
     User * central_node_;
 
     
