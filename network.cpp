@@ -8,14 +8,19 @@ Network::Network(){
     id_map_ = std::unordered_map<int,User*>();
     user_map_ = std::unordered_map<User*,std::vector<bool>>();
     central_node_ = new User();
-<<<<<<< HEAD
-=======
 }
 
 Network::~Network(){
+
+    for (auto e : id_map_)
+    {
+        delete [] e.second;
+    }
+
+    //delete user_map_;
+    //delete id_map_;
     delete central_node_;
     //update destructor with each user
->>>>>>> b0e66fcb5bd0fb314a2e0368b3262f59e72c9c0f
 }
 
 void Network::populate_tree(std::string filename_target, std::string filename_edges){
