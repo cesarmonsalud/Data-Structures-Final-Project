@@ -70,7 +70,22 @@ void Network::print_users(){
 
 
 int Network::add_edge(int id_1, int id_2){
-    return 1;
+
+    User* User1= search_by_id(id_1); 
+    User* User2= search_by_id(id_2); 
+
+    if(User1 == NULL || User2 == NULL){
+        return -1;
+    }else{
+
+        User1->add_connection(User2);
+        User2->add_connection(User1);
+
+        return 1;
+    }
+
+    //if either node cannot be found, return -1
+   
 }
 
 bool Network::was_visited(User * user, int level){
