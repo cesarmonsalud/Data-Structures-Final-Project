@@ -28,15 +28,25 @@ Network::~Network(){
     //update destructor with each user
 }
 
-void Network::populate_tree(std::string filename_target, std::string filename_edges){
+void Network::populate_tree(std::string filename_target_name, std::string filename_edges, std::string filename_target_id){
     //open csv file with user info
-
+    //Edit these files to do the right thing
+    std::vector<std::string> name = read_csv_string(filename_target_name);
+    std::vector<int> id_1 = read_csv_int(filename_edges, 0, 2);
+    std::vector<int> id_2 = read_csv_int(filename_edges, 1, 2);
+    std::vector<int> id = read_csv_int(filename_target_id, 1, 2);
+    std::cout<<"sheesh"<<std::endl;
     //while lines in csv, pass line into create node and repeat for all lines of csv
     create_user("insert line string");//creates new node given line and adds <int id,User *user>pair to id_map_
-
+    for(unsigned long i = 0; i<id.size(); i++){
+        create_user_(int(id.at(i)),name.at(i));
+    }
     //when finished iterating close csv file
 
     //open csv file with user edges
+    for(unsigned long i = 0; i<id_1.size(); i++){
+        add_edge(int(id_1.at(i)), int(id_2.at(i)));
+    }
 
     //while there are still edges get a new line
     //add_edge(13939,383839);

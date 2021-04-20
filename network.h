@@ -32,7 +32,7 @@ class Network{
      * using the unordered_map
      * Note: figure out how to handle seperate clusers
      */
-    void populate_tree(std::string filename, std::string filename_edges);
+    void populate_tree(std::string filename_target_name, std::string filename_edges, std::string filename_target_id);
 
     /***
      * helper function for step #2 in populate_tree()
