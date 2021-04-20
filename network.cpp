@@ -89,11 +89,38 @@ int Network::add_edge(int id_1, int id_2){
 }
 
 bool Network::was_visited(User * user, int level){
-    return false;
+
+    std::vector<bool> Vector = user_map_[user];
+    if((int)Vector.size()<level){
+        return false;
+    }
+    if(Vector[level]==true){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 void Network::new_visit(User * user, int level){
+
+    /*cases:
+    1. Vector dont exist
+    2. Vector exists for levels smaller than current level
+    3. Vector already exists for level
+    */
+   /*
+    std::vector<bool> Vector = user_map_[user];
+    if(Vector.size()==0){
+        for(int i=0; i<level; i++){
+            Vector[i] = false;
+        }
+        Vector[level]=true;
+    }
+    else if()
+
+    Vector[level] = true;
     return;
+    */
 }
 
 std::vector<std::string> Network::BFS_username(std::string query, User start){
