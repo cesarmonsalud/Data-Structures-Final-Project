@@ -6,8 +6,8 @@
 
 Network::Network(){
     id_map_ = std::unordered_map<int,User*>();
-    user_map = std::unordered_map<User*,std::vector<bool>>();
-    central_node = User();
+    user_map_ = std::unordered_map<User*,std::vector<bool>>();
+    central_node_ = new User();
 }
 
 void Network::populate_tree(std::string filename_target, std::string filename_edges){
