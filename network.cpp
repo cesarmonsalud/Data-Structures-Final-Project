@@ -12,6 +12,7 @@ Network::Network(){
 
 Network::~Network(){
     delete central_node_;
+    //update destructor with each user
 }
 
 void Network::populate_tree(std::string filename_target, std::string filename_edges){
@@ -44,6 +45,21 @@ void Network::create_user(std::string line){
     //remember to add user to _id_map_
     return;
 }
+
+void Network::create_user_(int id, std::string username){
+    User * newUser = new User(id,username,this->central_node_);
+    std::pair<int,User*> newPair(id,newUser);
+    id_map_.insert(newPair);
+}
+
+void Network::print_users(){
+    for(auto it=id_map_.begin();it!=id_map_.end();++it){
+        it->second->print();
+    }
+    return;
+}
+
+
 
 int Network::add_edge(int id_1, int id_2){
 

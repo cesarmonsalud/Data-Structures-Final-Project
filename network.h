@@ -41,6 +41,9 @@ class Network{
      */
     void create_user(std::string line); //figure out what info to pass in
 
+    //helper function of create_user
+    void create_user_(int id, std::string username);
+
     /***
      * helper function for step #3 in populate_tree()
      * use id_map_ to update both users connections with the edge
@@ -48,6 +51,9 @@ class Network{
      * return -1 if either node could not be found
     */
     int add_edge(int id_1, int id_2);
+
+    //prints users in the network
+    void print_users();
 
 
     //USER SEARCH SECTION

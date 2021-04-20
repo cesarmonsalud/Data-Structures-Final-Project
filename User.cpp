@@ -42,8 +42,10 @@
 
     //prints out user information in a nice way
     void User::print(){
-        std::cout<< "Username: " << username_;
-        std::cout << std::endl;
+        std::cout<< "Username: " << username_ << std::endl;
         std::cout<< "ID: " << id_;
+
+        return;
+
 
     }
