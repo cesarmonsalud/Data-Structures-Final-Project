@@ -46,6 +46,13 @@ void Network::create_user(std::string line){
 }
 
 int Network::add_edge(int id_1, int id_2){
+
+    //if either node cannot be found, return -1
+    if(id_1==NULL || id_2==NULL){
+        return -1;
+    }
+
+    
     return 1;
 }
 
