@@ -8,6 +8,14 @@ Network::Network(){
     id_map_ = std::unordered_map<int,User*>();
     user_map_ = std::unordered_map<User*,std::vector<bool>>();
     central_node_ = new User();
+<<<<<<< HEAD
+=======
+}
+
+Network::~Network(){
+    delete central_node_;
+    //update destructor with each user
+>>>>>>> b0e66fcb5bd0fb314a2e0368b3262f59e72c9c0f
 }
 
 void Network::populate_tree(std::string filename_target, std::string filename_edges){
@@ -41,12 +49,36 @@ void Network::create_user(std::string line){
     return;
 }
 
+void Network::create_user_(int id, std::string username){
+    User * newUser = new User(id,username,this->central_node_);
+    std::pair<int,User*> newPair(id,newUser);
+    id_map_.insert(newPair);
+}
+
+void Network::print_users(){
+    for(auto it=id_map_.begin();it!=id_map_.end();++it){
+        it->second->print();
+    }
+    return;
+}
+
+
+
 int Network::add_edge(int id_1, int id_2){
     return 1;
 }
 
+bool Network::was_visited(User * user, int level){
+    return false;
+}
+
+void Network::new_visit(User * user, int level){
+    return;
+}
+
 std::vector<std::string> Network::BFS_username(std::string query, User start){
-    return NULL;
+    //
+    return std::vector<std::string>();
 }
 
 int Network::shortest_path(User user1, User user2){

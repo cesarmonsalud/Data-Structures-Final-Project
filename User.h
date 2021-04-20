@@ -10,9 +10,10 @@ class User{
     User();
     User(int id);
     User(int id, std::string username, User * central_node);
+    ~User();
 
     //adds connection to instance of User
-    void add_connection(User user);
+    void add_connection(User * user);
 
     //prints out user information in a nice way
     void print();

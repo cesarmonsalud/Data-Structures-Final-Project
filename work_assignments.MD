@@ -1,10 +1,17 @@
+
+
+
+
+
+
+
+
 Date: 
 Nick:
 Kieth:
 - Users
 - Make file
 Liam:
-<<<<<<< HEAD
 -Users
 -add_edge
 Cesar: 
