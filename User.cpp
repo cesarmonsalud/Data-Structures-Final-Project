@@ -40,12 +40,19 @@
 
     }
 
+    const std::string User::get_id(){
+        return std::to_string(id_);
+    }
+
+    const std::string User::username(){
+        return username_;
+    }
+
     //prints out user information in a nice way
     void User::print(){
-        std::cout<< "Username: " << username_ << std::endl;
-        std::cout<< "ID: " << id_;
-
+        std::cout<< "Username: ";
+        std::cout<< username() ;
+        std::cout<< "ID: " ;
+        std::cout << get_id() ;
         return;
-
-
-    }
+}
