@@ -32,7 +32,7 @@ class Network{
      * using the unordered_map
      * Note: figure out how to handle seperate clusers
      */
-    void populate_tree(std::string filename, std::string filename_edges);
+    void populate_tree(std::string filename_target_name, std::string filename_edges, std::string filename_target_id);
 
     /***
      * helper function for step #2 in populate_tree()
@@ -63,7 +63,7 @@ class Network{
      * returns if node was visited
      * 
      */
-    bool was_visited(User * user);
+    bool was_visited(User * user, int level);
 
     /***
      * helper function for BFS_username
@@ -93,6 +93,10 @@ class Network{
     int shortest_path(User user1, User user2);
 
 
+    std::vector<int> read_csv_int(std::string filename, int columnIndex, int totalColumns);
+
+    std::vector<std::string> read_csv_string(std::string filename);
+
     //Part #2
     
     /***
@@ -100,14 +104,14 @@ class Network{
      * Input a node and function outputs if it has been visited
      * 
      */
-    bool was_visited(User* user,int level);
+   
     
 
 
     private:
     std::unordered_map<int,User*> id_map_;
     std::unordered_map<User*,std::vector<bool>> user_map_;
-    int level_ = 0;
+    //int level_ = 0;
     User * central_node_;
 
     

@@ -16,11 +16,21 @@ std::ostream& operator<< (std::ostream &out, User * user) {
 }
 */
 
-
-
-
 int main(){
-    std::cout<<"deez nuts";
+    Network network;
+    network.populate_tree("namesTestData.csv", "edgesTestData.csv", "targetTestData.csv");
+
+    /**
+    Network network = Network();
+    std::vector<std::string> name = network.read_csv_string("names.csv");
+    std::vector<int> id_1 = network.read_csv_int("musae_git_edges.csv", 0, 2);
+    std::vector<int> id_2 = network.read_csv_int("musae_git_edges.csv", 1, 2);
+    std::vector<int> id = network.read_csv_int("targetdata.csv", 0, 2);
+    std::vector<int> ml_target = network.read_csv_int("targetdata.csv", 1, 2);
+    std::cout<< "problem here?" <<std::endl;
+    */
+
+    /*
     User * central_node = new User();
     User * new_user = new User(12,"bob",central_node);
     std::cout << new_user;
@@ -37,4 +47,4 @@ int main(){
     */
 
     return 1;
-}
+};
