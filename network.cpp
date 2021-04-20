@@ -3,6 +3,11 @@
 #include "network.h"
 #include <string>
 #include <unordered_map>
+#include <fstream>
+#include <vector>
+#include <utility> // std::pair
+#include <stdexcept> // std::runtime_error
+#include <sstream> // std::stringstream
 
 Network::Network(){
     id_map_ = std::unordered_map<int,User*>();
@@ -83,3 +88,80 @@ int Network::shortest_path(User user1, User user2){
 }
 
 
+std::vector<int> Network::read_csv_int(std::string filename, int columnIndex, int totalColumns){
+    std::vector<int> result;
+    // Create an input filestream
+    std::ifstream myFile(filename);
+
+    // Make sure the file is open
+    if(!myFile.is_open()) throw std::runtime_error("Could not open file");
+
+    // Helper vars
+    std::string line;
+    int val;
+
+    // Read data, line by line
+    while(std::getline(myFile, line))
+    {
+        // Create a stringstream of the current line
+        std::stringstream ss(line);
+        
+        int colIdx = 0;
+        // Extract each integer
+        while(ss >> val){
+
+            
+            if(colIdx == columnIndex){
+            // Add the current integer to the 'colIdx' column's values vector
+            result.push_back(val);
+            
+            }
+            
+            // If the next token is a comma, ignore it and move on
+            if(ss.peek() == ',') ss.ignore();
+
+            if(colIdx == totalColumns - 1){
+                colIdx = 0;
+                break;
+            }
+
+            // Increment the column index
+            colIdx++;
+        }
+    }
+
+    // Close file
+    myFile.close();
+
+    std::cout<< filename << " is done!" << std::endl;
+
+    return result;
+
+
+}
+
+std::vector<std::string> Network::read_csv_string(std::string filename){
+    std::vector<std::string> result;
+    // Create an input filestream
+    std::ifstream myFile(filename);
+
+    // Make sure the file is open
+    if(!myFile.is_open()) throw std::runtime_error("Could not open file");
+
+    // Helper vars
+    std::string line;
+    std::string getstring;
+
+    // Read data, line by line
+    while(std::getline(myFile, line))
+    {
+        result.push_back(line);
+    }
+
+    // Close file
+    myFile.close();
+
+    std::cout<< filename << " is done!" << std::endl;
+
+    return result;
+}

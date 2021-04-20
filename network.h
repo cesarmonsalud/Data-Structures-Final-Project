@@ -93,6 +93,10 @@ class Network{
     int shortest_path(User user1, User user2);
 
 
+    std::vector<int> read_csv_int(std::string filename, int columnIndex, int totalColumns);
+
+    std::vector<std::string> read_csv_string(std::string filename);
+
     //Part #2
     
     /***
