@@ -81,12 +81,6 @@ void Network::create_user_(int id, std::string username){
     id_map_.insert(newPair);
 }
 
-void Network::print_users(){
-    for(auto it=id_map_.begin();it!=id_map_.end();++it){
-        it->second->print();
-    }
-    return;
-}
 
 
 
@@ -232,20 +226,12 @@ std::vector<std::string> Network::read_csv_string(std::string filename){
     return result;
 }
 
-std::string Network::user_to_string(User * user){
-    std::string str = user->user_string() + "Connections: " + "\n";
-    std::vector<User*> connections = user->get_connections();
-    for(int i = 0; i < int(connections.size());i++){
-        str+= "   "+connections[i]->get_id() + "\n";
-    }
-    return str;
-}
 
 std::string Network::network_string(){
     std::string str = "NETWORK \n";
     for(auto entry: id_map_){
-        str+= user_to_string(entry.second);
+        //str+= user_to_string(entry.second);
+        str += entry.second->user_string();
     }
     return str;
-
 }

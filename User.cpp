@@ -11,6 +11,8 @@
         central_node_ = NULL;
         connections_ = new std::vector<User*>();
     }
+
+
     //other constructor
     User::User(int id){
         id_ = id;
@@ -19,6 +21,8 @@
         central_node_ = NULL;
         connections_ = new std::vector<User*>();
     }
+
+
     //even another constructor
     User::User(int id, std::string username, User * central_node){
 
@@ -28,16 +32,26 @@
         connections_ = new std::vector<User*>();
     }
 
+
     User::~User(){
         connections_->clear();
         delete connections_;
     }
 
-    //adds connection to instance of User
+
     void User::add_connection(User * user){
 
-        //Before: connections_->push(user);
-        connections_->push_back(user);
+        //makes sure it is not adding a connection to itself
+        if(this!=user){
+            //makes sure connection has not already been added
+            for(int i = 0; i < int(connections_->size());i++){
+                if((*connections_)[i]==user){
+                    return;
+                }
+            }
+            connections_->push_back(user);
+        }
+        return;
 
     }
 
@@ -45,31 +59,22 @@
         return std::to_string(id_);
     }
 
+
     const std::string User::get_username(){
         return username_;
     }
+
 
     std::vector<User*> User::get_connections(){
         return *connections_;
     }
 
-    //prints out user information in a nice way
-    void User::print(){
-        std::cout<< "Username: ";
-        std::cout<< get_username() ;
-        std::cout<< "ID: " ;
-        std::cout << get_id() ;
-        return;
-    }
-
 
     std::string User::user_string(){
         std::string str = "Username: " + get_username() + "\n";
-        str += "ID: " + get_id() + "\n";
-        /*
+        str += "ID: " + get_id() + "\n" + "Connections: " + "\n";
         for(int i = 0; i < int(connections_->size());i++){
-            str+= "    " + 
+            str+= "   "+(*connections_)[i]->get_id() + "\n";
         }
-        */
         return str;
     }

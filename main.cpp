@@ -8,24 +8,39 @@ const std::string USERS_FILE = "musae_git_target.csv";
 const std::string EDGE_FILE = "musae_git_edges.csv";
 
 
-/*
-std::ostream& operator<< (std::ostream &out, User * user) {
-    out << user->get_id() << ':';
-    out << user->username() << ':';
-    return out;
-}
-*/
+void print(Network & network){
+    std::cout<< network.network_string();
+};
+
+void print(User & user){
+    std::cout << user.user_string();
+};
+
 
 int main(){
     Network network;
     User * central_node = new User();
-    network.populate_tree("namesTestData.csv", "edgesTestData.csv", "targetTestData.csv");
-    std::cout << network.network_string();
+    //network.populate_tree("namesTestData.csv", "edgesTestData.csv", "targetTestData.csv");
+    
+    User user1 = User(1,"nick",central_node);
+    
+    network.create_user_(1,"nick");
+    network.create_user_(2,"keith");
+    network.create_user_(3,"liam");
+    
 
-    User * user1 = new User(12,"nick",central_node);
+    network.add_edge(1,2);
+    network.add_edge(1,3);
+    network.add_edge(1,3);
+    network.add_edge(1,1);
+
+    print(user1);
+    print(network);
+
+    //User * user1 = new User(12,"nick",central_node);
     //std::cout << network.user_to_string(user1);
-    delete central_node;
-    delete user1;
+    //delete central_node;
+    //delete user1;
 
     /**
     Network network = Network();

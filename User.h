@@ -24,9 +24,6 @@ class User{
 
 
 
-    //prints out user information in a nice way
-    void print();
-
     private:
     int id_; 
     std::string username_;

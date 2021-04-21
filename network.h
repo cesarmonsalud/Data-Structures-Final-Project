@@ -52,8 +52,7 @@ class Network{
     */
     int add_edge(int id_1, int id_2);
 
-    //prints users in the network
-    void print_users(); //Not Used
+
 
 
     //USER SEARCH SECTION
@@ -99,14 +98,8 @@ class Network{
 
     //Part #2
     
-    /***
-     * helper function for BFS
-     * Input a node and function outputs if it has been visited
-     * 
-     */
-
-    std::string user_to_string(User * user);//transforms user into string
-    std::string network_string();
+  
+    std::string network_string();//turns network into string
     
 
 
