@@ -18,7 +18,14 @@ std::ostream& operator<< (std::ostream &out, User * user) {
 
 int main(){
     Network network;
+    User * central_node = new User();
     network.populate_tree("namesTestData.csv", "edgesTestData.csv", "targetTestData.csv");
+    std::cout << network.network_string();
+
+    User * user1 = new User(12,"nick",central_node);
+    //std::cout << network.user_to_string(user1);
+    delete central_node;
+    delete user1;
 
     /**
     Network network = Network();
@@ -34,8 +41,12 @@ int main(){
     User * central_node = new User();
     User * new_user = new User(12,"bob",central_node);
     std::cout << new_user;
+
+    */
     //std::cout << new_user.id();
     //std::cout << new_user;
+
+
     
 
 

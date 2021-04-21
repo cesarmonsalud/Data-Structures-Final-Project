@@ -29,7 +29,8 @@
     }
 
     User::~User(){
-        delete [] connections_;
+        connections_->clear();
+        delete connections_;
     }
 
     //adds connection to instance of User
@@ -44,15 +45,31 @@
         return std::to_string(id_);
     }
 
-    const std::string User::username(){
+    const std::string User::get_username(){
         return username_;
+    }
+
+    std::vector<User*> User::get_connections(){
+        return *connections_;
     }
 
     //prints out user information in a nice way
     void User::print(){
         std::cout<< "Username: ";
-        std::cout<< username() ;
+        std::cout<< get_username() ;
         std::cout<< "ID: " ;
         std::cout << get_id() ;
         return;
-}
+    }
+
+
+    std::string User::user_string(){
+        std::string str = "Username: " + get_username() + "\n";
+        str += "ID: " + get_id() + "\n";
+        /*
+        for(int i = 0; i < int(connections_->size());i++){
+            str+= "    " + 
+        }
+        */
+        return str;
+    }

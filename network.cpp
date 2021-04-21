@@ -16,15 +16,21 @@ Network::Network(){
 }
 
 Network::~Network(){
-
-    for (auto e : id_map_)
-    {
-        delete [] e.second;
+    if(id_map_.empty()==false){
+        for (auto pair : id_map_)
+        {
+            User * temp = pair.second;
+            pair.second = NULL;
+            delete temp;
+            
+        }
     }
+
 
     //delete user_map_;
     //delete id_map_;
     delete central_node_;
+    central_node_ = NULL;
     //update destructor with each user
 }
 
@@ -35,7 +41,7 @@ void Network::populate_tree(std::string filename_target_name, std::string filena
     std::vector<int> id_1 = read_csv_int(filename_edges, 0, 2);
     std::vector<int> id_2 = read_csv_int(filename_edges, 1, 2);
     std::vector<int> id = read_csv_int(filename_target_id, 1, 2);
-    std::cout<<"sheesh"<<std::endl;
+    //std::cout<<"sheesh"<<std::endl;
     //while lines in csv, pass line into create node and repeat for all lines of csv
     create_user("insert line string");//creates new node given line and adds <int id,User *user>pair to id_map_
     for(unsigned long i = 0; i<id.size(); i++){
@@ -193,7 +199,7 @@ std::vector<int> Network::read_csv_int(std::string filename, int columnIndex, in
     // Close file
     myFile.close();
 
-    std::cout<< filename << " is done!" << std::endl;
+    //std::cout<< filename << " is done!" << std::endl;
 
     return result;
 
@@ -221,7 +227,25 @@ std::vector<std::string> Network::read_csv_string(std::string filename){
     // Close file
     myFile.close();
 
-    std::cout<< filename << " is done!" << std::endl;
+    //std::cout<< filename << " is done!" << std::endl;
 
     return result;
+}
+
+std::string Network::user_to_string(User * user){
+    std::string str = user->user_string() + "Connections: " + "\n";
+    std::vector<User*> connections = user->get_connections();
+    for(int i = 0; i < int(connections.size());i++){
+        str+= "   "+connections[i]->get_id() + "\n";
+    }
+    return str;
+}
+
+std::string Network::network_string(){
+    std::string str = "NETWORK \n";
+    for(auto entry: id_map_){
+        str+= user_to_string(entry.second);
+    }
+    return str;
+
 }

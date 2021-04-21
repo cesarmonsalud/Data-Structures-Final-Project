@@ -16,7 +16,12 @@ class User{
     void add_connection(User * user);
 
     const std::string get_id();
-    const std::string username();
+    const std::string get_username();
+    std::vector<User*> get_connections();
+
+
+    std::string user_string();
+
 
 
     //prints out user information in a nice way
