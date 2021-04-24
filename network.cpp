@@ -40,7 +40,7 @@ void Network::populate_tree(std::string filename_target_name, std::string filena
     std::vector<std::string> name = read_csv_string(filename_target_name);
     std::vector<int> id_1 = read_csv_int(filename_edges, 0, 2);
     std::vector<int> id_2 = read_csv_int(filename_edges, 1, 2);
-    std::vector<int> id = read_csv_int(filename_target_id, 1, 2);
+    std::vector<int> id = read_csv_int(filename_target_id, 0, 2);
     //std::cout<<"sheesh"<<std::endl;
     //while lines in csv, pass line into create node and repeat for all lines of csv
     create_user("insert line string");//creates new node given line and adds <int id,User *user>pair to id_map_

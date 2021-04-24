@@ -20,10 +20,12 @@ void print(User & user){
 int main(){
     Network network;
     User * central_node = new User();
-    //network.populate_tree("namesTestData.csv", "edgesTestData.csv", "targetTestData.csv");
-    
     User user1 = User(1,"nick",central_node);
     
+    network.populate_tree("names.csv", "musae_git_edges.csv", "targetdata.csv" );
+
+    
+    /*
     network.create_user_(1,"nick");
     network.create_user_(2,"keith");
     network.create_user_(3,"liam");
@@ -33,8 +35,9 @@ int main(){
     network.add_edge(1,3);
     network.add_edge(1,3);
     network.add_edge(1,1);
+    */
 
-    print(user1);
+    //print(user1);
     print(network);
 
     //User * user1 = new User(12,"nick",central_node);
