@@ -18,6 +18,9 @@ class User{
     //prints out user information in a nice way
     void print();
 
+    std::string getusername();
+    int getid();
+
     private:
     int id_; 
     std::string username_;
