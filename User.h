@@ -15,8 +15,14 @@ class User{
     //adds connection to instance of User
     void add_connection(User * user);
 
-    //prints out user information in a nice way
-    void print();
+    const std::string get_id();
+    const std::string get_username();
+    std::vector<User*> get_connections();
+
+
+    std::string user_string();
+
+
 
     std::string getusername();
     int getid();

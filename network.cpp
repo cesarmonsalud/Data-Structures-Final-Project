@@ -3,6 +3,11 @@
 #include "network.h"
 #include <string>
 #include <unordered_map>
+#include <fstream>
+#include <vector>
+#include <utility> // std::pair
+#include <stdexcept> // std::runtime_error
+#include <sstream> // std::stringstream
 
 Network::Network(){
     id_map_ = std::unordered_map<int,User*>();
@@ -11,19 +16,43 @@ Network::Network(){
 }
 
 Network::~Network(){
+    if(id_map_.empty()==false){
+        for (auto pair : id_map_)
+        {
+            User * temp = pair.second;
+            pair.second = NULL;
+            delete temp;
+            
+        }
+    }
+
+
+    //delete user_map_;
+    //delete id_map_;
     delete central_node_;
+    central_node_ = NULL;
     //update destructor with each user
 }
 
-void Network::populate_tree(std::string filename_target, std::string filename_edges){
+void Network::populate_tree(std::string filename_target_name, std::string filename_edges, std::string filename_target_id){
     //open csv file with user info
-
+    //Edit these files to do the right thing
+    std::vector<std::string> name = read_csv_string(filename_target_name);
+    std::vector<int> id_1 = read_csv_int(filename_edges, 0, 2);
+    std::vector<int> id_2 = read_csv_int(filename_edges, 1, 2);
+    std::vector<int> id = read_csv_int(filename_target_id, 0, 2);
+    //std::cout<<"sheesh"<<std::endl;
     //while lines in csv, pass line into create node and repeat for all lines of csv
     create_user("insert line string");//creates new node given line and adds <int id,User *user>pair to id_map_
-
+    for(unsigned long i = 0; i<id.size(); i++){
+        create_user_(int(id.at(i)),name.at(i));
+    }
     //when finished iterating close csv file
 
     //open csv file with user edges
+    for(unsigned long i = 0; i<id_1.size(); i++){
+        add_edge(int(id_1.at(i)), int(id_2.at(i)));
+    }
 
     //while there are still edges get a new line
     //add_edge(13939,383839);
@@ -52,12 +81,6 @@ void Network::create_user_(int id, std::string username){
     id_map_.insert(newPair);
 }
 
-void Network::print_users(){
-    for(auto it=id_map_.begin();it!=id_map_.end();++it){
-        it->second->print();
-    }
-    return;
-}
 
 
 
@@ -125,3 +148,90 @@ int Network::shortest_path(User user1, User user2){
 }
 
 
+std::vector<int> Network::read_csv_int(std::string filename, int columnIndex, int totalColumns){
+    std::vector<int> result;
+    // Create an input filestream
+    std::ifstream myFile(filename);
+
+    // Make sure the file is open
+    if(!myFile.is_open()) throw std::runtime_error("Could not open file");
+
+    // Helper vars
+    std::string line;
+    int val;
+
+    // Read data, line by line
+    while(std::getline(myFile, line))
+    {
+        // Create a stringstream of the current line
+        std::stringstream ss(line);
+        
+        int colIdx = 0;
+        // Extract each integer
+        while(ss >> val){
+
+            
+            if(colIdx == columnIndex){
+            // Add the current integer to the 'colIdx' column's values vector
+            result.push_back(val);
+            
+            }
+            
+            // If the next token is a comma, ignore it and move on
+            if(ss.peek() == ',') ss.ignore();
+
+            if(colIdx == totalColumns - 1){
+                colIdx = 0;
+                break;
+            }
+
+            // Increment the column index
+            colIdx++;
+        }
+    }
+
+    // Close file
+    myFile.close();
+
+    //std::cout<< filename << " is done!" << std::endl;
+
+    return result;
+
+
+}
+
+std::vector<std::string> Network::read_csv_string(std::string filename){
+    std::vector<std::string> result;
+    // Create an input filestream
+    std::ifstream myFile(filename);
+
+    // Make sure the file is open
+    if(!myFile.is_open()) throw std::runtime_error("Could not open file");
+
+    // Helper vars
+    std::string line;
+    std::string getstring;
+
+    // Read data, line by line
+    while(std::getline(myFile, line))
+    {
+        result.push_back(line);
+    }
+
+    // Close file
+    myFile.close();
+
+    //std::cout<< filename << " is done!" << std::endl;
+
+    return result;
+}
+
+
+std::string Network::network_string(){
+    std::string str = "NETWORK \n";
+    for(auto entry: id_map_){
+        //str+= user_to_string(entry.second);
+        str += entry.second->user_string();
+    }
+    return str;
+}
