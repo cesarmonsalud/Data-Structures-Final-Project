@@ -77,7 +77,9 @@ void Network::create_user(std::string line){
 
 void Network::create_user_(int id, std::string username){
     User * newUser = new User(id,username,this->central_node_);
-    std::pair<int,User*> newPair(id,newUser);
+    std::pair<int,User*> newPair(id,newUser); //creates pair newPair
+    std::pair<User*,std::vector<bool>> userPair(newUser,std::vector<bool>()); // creates user_map_ 
+    user_map_.insert(userPair);
     id_map_.insert(newPair);
 }
 
@@ -225,7 +227,6 @@ std::vector<std::string> Network::read_csv_string(std::string filename){
 
     return result;
 }
-
 
 std::string Network::network_string(){
     std::string str = "NETWORK \n";
