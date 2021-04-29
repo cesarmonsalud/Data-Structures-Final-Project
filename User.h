@@ -24,6 +24,9 @@ class User{
 
 
 
+    std::string getusername();
+    int getid();
+
     private:
     int id_; 
     std::string username_;

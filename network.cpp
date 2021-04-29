@@ -42,7 +42,7 @@ void Network::populate_tree(std::string filename_target_name, std::string filena
     std::vector<std::string> name = read_csv_string(filename_target_name);
     std::vector<int> id_1 = read_csv_int(filename_edges, 0, 2);
     std::vector<int> id_2 = read_csv_int(filename_edges, 1, 2);
-    std::vector<int> id = read_csv_int(filename_target_id, 1, 2);
+    std::vector<int> id = read_csv_int(filename_target_id, 0, 2);
     //std::cout<<"sheesh"<<std::endl;
     //while lines in csv, pass line into create node and repeat for all lines of csv
     for(unsigned long i = 0; i<id.size(); i++){
@@ -100,11 +100,11 @@ int Network::add_edge(int id_1, int id_2){
 
 bool Network::was_visited(User * user, int level){
 
-    std::vector<bool> Vector = user_map_[user];
-    if((int)Vector.size()<level){
+    std::vector<bool> & Vector = user_map_[user];
+    if(int(Vector.size())<level){
         return false;
     }
-    if(Vector[level]==true){
+    else if(Vector[level]==true){
         return true;
     }else{
         return false;
@@ -118,19 +118,25 @@ void Network::new_visit(User * user, int level){
     2. Vector exists for levels smaller than current level
     3. Vector already exists for level
     */
-   /*
-    std::vector<bool> Vector = user_map_[user];
-    if(Vector.size()==0){
-        for(int i=0; i<level; i++){
-            Vector[i] = false;
-        }
-        Vector[level]=true;
-    }
-    else if()
 
-    Vector[level] = true;
-    return;
-    */
+    std::vector<bool> & Vector = user_map_[user];
+
+    if(int(Vector.size())==0){
+        for(int i=0; i<level; i++){
+            Vector.push_back(false);
+        }
+        Vector.push_back(true);
+    }
+    else if(int(Vector.size())<level){
+        for(int i=int(Vector.size()); i<level; i++){
+            Vector.push_back(false);
+        }
+        Vector.push_back(true);
+    }
+    else{
+        Vector[level] = true;
+    }
+
 }
 
 std::vector<std::string> Network::BFS_username(std::string query, User start){
