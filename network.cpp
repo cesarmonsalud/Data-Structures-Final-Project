@@ -118,7 +118,6 @@ void Network::new_visit(User * user, int level){
     2. Vector exists for levels smaller than current level
     3. Vector already exists for level
     */
-
     std::vector<bool> & Vector = user_map_[user];
 
     if(int(Vector.size())==0){

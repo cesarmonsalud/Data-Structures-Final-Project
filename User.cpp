@@ -59,22 +59,6 @@
         return std::to_string(id_);
     }
 
-<<<<<<< HEAD
-    
-
-    //prints out user information in a nice way
-    void User::print(){
-        std::cout<< "Username: " << User::getusername() << std::endl;
-        std::cout<< "ID: " << User::getid() << std::endl;
-        return;
-    }
-
-    std::string User::getusername(){
-        return username_;
-    }
-    int User::getid(){
-        return id_;
-=======
 
     const std::string User::get_username(){
         return username_;
@@ -93,5 +77,4 @@
             str+= "   "+(*connections_)[i]->get_id() + "\n";
         }
         return str;
->>>>>>> 241a51edce1676d622403c04e85bec9b9db77b12
     }
