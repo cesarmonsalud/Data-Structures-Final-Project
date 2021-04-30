@@ -104,7 +104,7 @@ bool Network::was_visited(User * user, int level){
     if(Vector.empty()){
         return false;
     }
-    if(int(Vector.size())>=level+1){
+    else if(int(Vector.size())>=level+1){
         return false;
     }
     else if(Vector[level]==true){
