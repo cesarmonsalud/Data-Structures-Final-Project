@@ -144,8 +144,33 @@ void Network::new_visit(User * user, int level){
 
 }
 
-std::vector<std::string> Network::BFS_username(std::string query, User start){
-    //
+std::vector<User*> Network::BFS_username(std::string query, User start){
+
+  //a set to store references to all visited nodes
+  bool visited[7]; 
+
+  //a queue to store references to nodes we should visit later
+  queue<std::string> queue; 
+  queue.push_back(start);
+  visited[start]=true;
+
+  while(queue.empty()==false){
+    current_node = queue.front()
+
+    //process currentnode Ex: # for example, print(current_node.value)
+        //check if string matches given node
+        name_check(query);
+
+    for(neighbor in current_node.neighbors){
+      if (neighbor is not in visited){
+        queue.push_back(neighbor)
+        visited.add(neighbor)
+      }
+    }
+  }
+    
+
+
     return std::vector<std::string>();
 }
 
