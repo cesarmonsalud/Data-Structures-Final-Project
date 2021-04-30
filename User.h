@@ -18,9 +18,11 @@ class User{
     const std::string get_id();
     const std::string get_username();
     std::vector<User*> get_connections();
+    User * get_connection(int index);
+    int num_connections();
 
-
-    std::string user_string();
+    std::string user_string(); 
+    
 
 
  

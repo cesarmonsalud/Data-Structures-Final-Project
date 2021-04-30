@@ -69,6 +69,19 @@
         return *connections_;
     }
 
+    User * User::get_connection(int index){
+        if((index<0)||(int(connections_->size())<index)){
+            return NULL;
+        }else{
+            return connections_->at(index);
+        }
+    }
+
+
+    int User::num_connections(){
+        return connections_->size();
+    }
+
 
     std::string User::user_string(){
         std::string str = "Username: " + get_username() + "\n";
