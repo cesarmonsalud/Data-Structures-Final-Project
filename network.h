@@ -103,7 +103,9 @@ class Network{
       return path comeback and change
      */ 
 
-    int shortest_path(User user1, User user2);
+    std::vector<User*> shortest_path(User * user1, User * user2);
+
+    std::string shortest_path_string(User * user1, User * user2);
 
     std::vector<int> read_csv_int(std::string filename, int columnIndex, int totalColumns);
 

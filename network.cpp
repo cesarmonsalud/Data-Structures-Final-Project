@@ -143,15 +143,96 @@ std::vector<std::string> Network::BFS_username(std::string query, User start){
     return std::vector<std::string>();
 }
 
-int Network::shortest_path(User user1, User user2){
-    //initialize distances?
-    std::unordered_map<User*,User*> previos; //Syntax <*current_user,*previos_user>
-    auto compare = [](std::pair<int,User*> a,std::pair<int,User*> b) { return a.first < b.first; }; //create comparator
-    std::priority_queue<std::pair<int,User*>,std::vector<std::pair<int,User*>>,decltype(compare)> p_q(compare); //creates priority queue
-    //visited already initialized
-    //std::pair<int,User*> newPair(,newUser);
+std::vector<User*> Network::shortest_path(User * user1, User * user2){
     
-    return 1;
+    std::unordered_map<User*,int> distance_map;  //initialize distances?
+    std::unordered_map<User*,User*> previos; //Syntax <*current_user,*previos_user>
+    auto compare = [](std::pair<User*,int> a,std::pair<User*,int> b) { return a.second < b.second; }; //create comparator
+    std::priority_queue<std::pair<User*,int>,std::vector<std::pair<User*,int>>,decltype(compare)> p_q(compare); //creates priority queue
+    //visited already initialized
+
+    //check for improper parameters
+    if(user1==NULL || user2==NULL) return std::vector<User*>();
+    if(user1==user2) return std::vector<User*>();
+    if(user1->get_connections().empty() || user2->get_connections().empty()) return std::vector<User*>();
+    
+
+    //create user and add to priority queue
+    std::pair<User*,int> newPair(user1,0);
+    previos[user1] = NULL; //push null to the previos for starting node
+    p_q.push(newPair); 
+
+    //variables for while loop
+    std::pair<User*,int> pair; 
+    User * curr_user;
+    int distance;
+    bool all_visited = true;
+    
+    while((p_q.empty()!= true) && (p_q.top().first!=user2)){//figure out how to check if the cluseter has been visited (all neighbors visited)
+        pair = p_q.top(); 
+        p_q.pop();
+        curr_user = pair.first;
+        distance = pair.second;
+        all_visited = true;
+        for(int i = 0; i < curr_user->num_connections(); i++){
+            User * curr_neighbor = curr_user->get_connection(i);
+            if(was_visited(curr_neighbor,level_)==false){
+                //update neighbor distances;
+                //check if there has already been a distance found for node, if not create pair and distance
+                bool updated = false;
+                if(distance_map.find(curr_neighbor)==distance_map.end()){
+                    std::pair<User*,int> newPair(user1,distance+1);
+                    distance_map.insert(newPair);
+                    updated = true;
+                }else{
+                    if(distance_map[curr_neighbor]>distance+1){
+                        distance_map[curr_neighbor] = distance + 1;
+                        updated = true;
+                    }
+                }
+                //if new distance is less, update current path
+                if(updated){
+                    previos[curr_neighbor] = curr_user;
+                }
+                all_visited = false;
+            }  
+            //check to see if all of the nodes where visited and the queue is empty
+        }
+        if(all_visited && p_q.empty()){ //node was not found
+            level_++;
+            return std::vector<User*>();
+        }
+        new_visit(curr_user,level_);
+    }
+
+    //if user is found extract path from previos
+    if(p_q.top().first==user2){
+        std::vector<User*> result;
+        curr_user = user2;
+        while(curr_user!=NULL){
+            result.push_back(curr_user);
+            curr_user = previos[curr_user];
+        }
+        level_++;
+        return result;
+    }
+    //return empty vector
+    level_++; //increment level comeback:make sure to increment any other return statements
+    return std::vector<User*>();
+}
+
+std::string Network::shortest_path_string(User * user1, User * user2){
+    std::string result = "";
+    std::vector<User*> path = shortest_path(user1,user2);
+    result += "Distance: " + std::to_string(path.size()) + "\n";
+    result += "Path: ";
+    for(unsigned long i = 0; i < path.size(); i++){
+        result+= path[i]->get_username();
+        if(i!=(path.size()-1)){
+            result+= " <-> ";
+        }
+    }
+    return result;
 }
 
 
