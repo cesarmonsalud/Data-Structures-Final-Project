@@ -141,14 +141,83 @@ void Network::new_visit(User * user, int level){
 
 }
 
-std::vector<std::string> Network::BFS_username(std::string query, User start){
-    //
-    return std::vector<std::string>();
+std::vector<User*> Network::BFS_username(std::string query){
+
+  User* start = get_random_node();
+  if(start==NULL){
+      return std::vector<User*>();
+  }
+  User* current_node;
+  std::vector<User*> result;
+  //a queue to store references to nodes we should visit later
+  std::queue<User*> q; 
+  q.push(start);
+  new_visit(start, level_);
+
+  while(q.empty()==false){
+    current_node = q.front();
+    q.pop();
+
+    //process currentnode Ex: # for example, print(current_node.value)
+        //check if string matches given node
+        if(name_check(query, current_node)==true){
+            result.push_back(current_node);
+        }
+        
+    for(unsigned long i=0; i < (current_node->get_connections()).size(); i++)
+    {
+      if(was_visited((current_node->get_connections())[i] , level_) == false)
+      {
+        q.push((current_node->get_connections())[i]);
+
+        new_visit( (current_node->get_connections())[i] , level_);
+      }
+    }
+  }
+    level_++; //increase level_ (dont touch)
+    return result;
 }
 
-std::vector<User*> Network::shortest_path(User * user1, User * user2){
+std::string Network::BFS_username_string(std::string query){
+    return vector_to_string(BFS_username(query));
+}
+
+bool Network::name_check(std::string query, User* current_node){
+
+    bool result;
+    for(unsigned long i=0; i<std::min(query.size(),current_node->get_username().size()); i++){
+        if((current_node->get_username())[i] == query[i]){
+            result = true;
+        }else{
+            return false;
+        }
     
-    std::unordered_map<User*,int> distance_map;  //initialize distances?
+    }
+    return result;
+}
+
+std::string Network::vector_to_string(std::vector<User*> v){
+
+    std::string result = "";
+    for(unsigned long i=0; i<v.size(); i++){
+        result += v[i]->user_string();
+    }
+    return result;
+}
+
+User* Network::get_random_node(){
+
+   if(id_map_.empty()==true){
+        return NULL;
+    }
+    
+    auto iter = id_map_.begin();
+    return iter->second;
+}
+    
+std::vector<User*> Network::shortest_path(User * user1, User * user2){
+    //initialize distances?
+    std::unordered_map<User*,int> distance_map;
     std::unordered_map<User*,User*> previos; //Syntax <*current_user,*previos_user>
     auto compare = [](std::pair<User*,int> a,std::pair<User*,int> b) { return a.second < b.second; }; //create comparator
     std::priority_queue<std::pair<User*,int>,std::vector<std::pair<User*,int>>,decltype(compare)> p_q(compare); //creates priority queue
@@ -196,7 +265,9 @@ std::vector<User*> Network::shortest_path(User * user1, User * user2){
                 //if new distance is less, update current path
                 if(updated){
                     previos[curr_neighbor] = curr_user;
+                    p_q.push(std::pair<User*,int>(curr_neighbor, distance_map[curr_neighbor]));
                 }
+
                 all_visited = false;
             }  
             //check to see if all of the nodes where visited and the queue is empty

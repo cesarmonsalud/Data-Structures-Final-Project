@@ -76,10 +76,18 @@ class Network{
      * use the user_map_ to implement the visited feature
      * Algorithm Here: https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
      */
-    std::vector<std::string> BFS_username(std::string query, User start);
+    std::vector<User*> BFS_username(std::string query);
+
+    std::string BFS_username_string(std::string query);
+
+    //helper function for BFS_username to check if string matches username in usermap
+    bool name_check(std::string query, User* current_node);
+
+    std::string vector_to_string(std::vector<User*> v);
+
+    User* get_random_node();
 
  
-
     /***
      * takes the address of two connections
      * return int with the shortest path between the two connections return -1 if not connected at all
