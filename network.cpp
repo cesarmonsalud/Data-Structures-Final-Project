@@ -101,7 +101,10 @@ int Network::add_edge(int id_1, int id_2){
 bool Network::was_visited(User * user, int level){
 
     std::vector<bool> & Vector = user_map_[user];
-    if(int(Vector.size())<level){
+    if(Vector.empty()){
+        return false;
+    }
+    if(int(Vector.size())>=level+1){
         return false;
     }
     else if(Vector[level]==true){
