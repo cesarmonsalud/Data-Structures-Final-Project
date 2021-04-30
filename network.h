@@ -39,9 +39,6 @@ class Network{
      * 1.create a node with User constructor
      * 2. add the User to id_map_
      */
-    void create_user(std::string line); //figure out what info to pass in
-
-    //helper function of create_user
     void create_user_(int id, std::string username);
 
     /***
@@ -89,10 +86,26 @@ class Network{
      * takes the address of two connections
      * return int with the shortest path between the two connections return -1 if not connected at all
      * Note: figure out if it would be possible to return the shortest path
+     * Dijkstra(Graph, source, destination):
+     * PSUEDOCODE
+      initialize distances  // initialize tentative distance value
+      initialize previous   // initialize a map that maps current node -> its previous node
+      initialize priority_queue   // initialize the priority queue
+      initialize visited
+
+      while the top of priority_queue is not destination:
+          get the current_node from priority_queue
+          for neighbor in current_node's neighbors and not in visited:
+              if update its neighbor's distances:
+                  previous[neighbor] = current_node
+          save current_node into visited
+
+      extract path from previous
+      return path and distance
+      return path comeback and change
      */ 
 
     int shortest_path(User user1, User user2);
-
 
     std::vector<int> read_csv_int(std::string filename, int columnIndex, int totalColumns);
 
@@ -102,13 +115,14 @@ class Network{
     
   
     std::string network_string();//turns network into string
+
     
 
 
     private:
     std::unordered_map<int,User*> id_map_;
     std::unordered_map<User*,std::vector<bool>> user_map_;
-    //int level_ = 0;
+    int level_;
     User * central_node_;
 
     

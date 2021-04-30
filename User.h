@@ -23,7 +23,7 @@ class User{
     std::string user_string();
 
 
-
+ 
     std::string getusername();
     int getid();
 

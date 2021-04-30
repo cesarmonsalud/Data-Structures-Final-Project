@@ -8,11 +8,13 @@
 #include <utility> // std::pair
 #include <stdexcept> // std::runtime_error
 #include <sstream> // std::stringstream
+#include <queue>
 
 Network::Network(){
     id_map_ = std::unordered_map<int,User*>();
     user_map_ = std::unordered_map<User*,std::vector<bool>>();
     central_node_ = new User();
+    level_ = 0;
 }
 
 Network::~Network(){
@@ -43,7 +45,6 @@ void Network::populate_tree(std::string filename_target_name, std::string filena
     std::vector<int> id = read_csv_int(filename_target_id, 0, 2);
     //std::cout<<"sheesh"<<std::endl;
     //while lines in csv, pass line into create node and repeat for all lines of csv
-    create_user("insert line string");//creates new node given line and adds <int id,User *user>pair to id_map_
     for(unsigned long i = 0; i<id.size(); i++){
         create_user_(int(id.at(i)),name.at(i));
     }
@@ -70,19 +71,13 @@ User * Network::search_by_id(int id){
     }
 }
 
-void Network::create_user(std::string line){
-    //remember to add user to _id_map_
-    return;
-}
-
 void Network::create_user_(int id, std::string username){
     User * newUser = new User(id,username,this->central_node_);
-    std::pair<int,User*> newPair(id,newUser);
+    std::pair<int,User*> newPair(id,newUser); //creates pair newPair
+    std::pair<User*,std::vector<bool>> userPair(newUser,std::vector<bool>()); // creates user_map_ 
+    user_map_.insert(userPair);
     id_map_.insert(newPair);
 }
-
-
-
 
 int Network::add_edge(int id_1, int id_2){
 
@@ -123,7 +118,6 @@ void Network::new_visit(User * user, int level){
     2. Vector exists for levels smaller than current level
     3. Vector already exists for level
     */
-
     std::vector<bool> & Vector = user_map_[user];
 
     if(int(Vector.size())==0){
@@ -175,6 +169,13 @@ std::vector<User*> Network::BFS_username(std::string query, User start){
 }
 
 int Network::shortest_path(User user1, User user2){
+    //initialize distances?
+    std::unordered_map<User*,User*> previos; //Syntax <*current_user,*previos_user>
+    auto compare = [](std::pair<int,User*> a,std::pair<int,User*> b) { return a.first < b.first; }; //create comparator
+    std::priority_queue<std::pair<int,User*>,std::vector<std::pair<int,User*>>,decltype(compare)> p_q(compare); //creates priority queue
+    //visited already initialized
+    //std::pair<int,User*> newPair(,newUser);
+    
     return 1;
 }
 
@@ -257,7 +258,6 @@ std::vector<std::string> Network::read_csv_string(std::string filename){
     return result;
 }
 
-
 std::string Network::network_string(){
     std::string str = "NETWORK \n";
     for(auto entry: id_map_){
@@ -266,3 +266,4 @@ std::string Network::network_string(){
     }
     return str;
 }
+
