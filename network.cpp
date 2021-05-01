@@ -122,7 +122,7 @@ void Network::new_visit(User * user, int level){
     3. Vector already exists for level
     */
     std::vector<bool> & Vector = (user_map_[user]);
-
+    /*
     if(Vector.empty()==true){
         for(int i=0; i<level; i++){
             Vector.push_back(false);
@@ -141,6 +141,15 @@ void Network::new_visit(User * user, int level){
     else{
         Vector[level] = true;
     }
+    */
+   if(int(Vector.size()-1)<level){
+       for(int i = int(int(Vector.size())-1); i <= level ;i++){
+           Vector.push_back(false);
+       }
+       Vector[level] = false; 
+   }else{
+       Vector[level] = true;
+   }
 
 }
 
@@ -329,6 +338,7 @@ std::vector<User*> Network::get_connection_level(User * user, int depth){
     for(int x = 0; x<depth ;x++){
         for(int y = 0; y < level_num; y++){
             //add a users connections
+            //comback and check if q is empty
             curr_user = q.front();
             q.pop();
             level_num = 0; 
