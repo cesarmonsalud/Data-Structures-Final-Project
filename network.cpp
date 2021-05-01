@@ -98,13 +98,13 @@ int Network::add_edge(int id_1, int id_2){
    
 }
 
-bool Network::was_visited(User * user, int level){
+bool Network::was_visited(User* user, int level){
 
     std::vector<bool> & Vector = user_map_[user];
     if(Vector.empty()){
         return false;
     }
-    else if(int(Vector.size())>=level+1){
+    else if(int(Vector.size())>level+1){
         return false;
     }
     else if(Vector[level]==true){
@@ -121,9 +121,9 @@ void Network::new_visit(User * user, int level){
     2. Vector exists for levels smaller than current level
     3. Vector already exists for level
     */
-    std::vector<bool> & Vector = user_map_[user];
+    std::vector<bool> & Vector = (user_map_[user]);
 
-    if(int(Vector.size())==0){
+    if(Vector.empty()==true){
         for(int i=0; i<level; i++){
             Vector.push_back(false);
         }
@@ -133,6 +133,9 @@ void Network::new_visit(User * user, int level){
         for(int i=int(Vector.size()); i<level; i++){
             Vector.push_back(false);
         }
+        Vector.push_back(true);
+    }
+    else if(int(Vector.size())==level){
         Vector.push_back(true);
     }
     else{
@@ -164,7 +167,7 @@ std::vector<User*> Network::BFS_username(std::string query){
             result.push_back(current_node);
         }
         
-    for(unsigned long i=0; i < (current_node->get_connections()).size(); i++)
+    for(int i=0; i < current_node->num_connections(); i++)
     {
       if(was_visited((current_node->get_connections())[i] , level_) == false)
       {
