@@ -104,9 +104,6 @@ bool Network::was_visited(User* user, int level){
     if(Vector.empty()){
         return false;
     }
-    else if(int(Vector.size())>level+1){
-        return false;
-    }
     else if(Vector[level]==true){
         return true;
     }else{
@@ -133,9 +130,6 @@ void Network::new_visit(User * user, int level){
         for(int i=int(Vector.size()); i<level; i++){
             Vector.push_back(false);
         }
-        Vector.push_back(true);
-    }
-    else if(int(Vector.size())==level){
         Vector.push_back(true);
     }
     else{
