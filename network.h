@@ -124,7 +124,9 @@ class Network{
   
     std::string network_string();//turns network into string
 
-    
+    int betweenness_centrality(User * user, int sample_size);
+
+    std::vector<User*> get_connection_level(User * user, int depth);
 
 
     private:

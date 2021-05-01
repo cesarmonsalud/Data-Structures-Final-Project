@@ -309,6 +309,42 @@ std::string Network::shortest_path_string(User * user1, User * user2){
     return result;
 }
 
+int Network::betweenness_centrality(User * user,int depth){
+    std::vector<User*> users;
+
+    return 0;
+}
+
+std::vector<User*> Network::get_connection_level(User * user, int depth){
+    std::vector<User*> users;
+    std::queue<User*> q;
+    int depth_counter = 0; 
+    int level_num = 1; 
+    User * curr_user = user;
+    q.push(curr_user);
+    
+    for(int x = 0; x<depth ;x++){
+        for(int y = 0; y < level_num; y++){
+            //add a users connections
+            curr_user = q.front();
+            q.pop();
+            level_num = 0; 
+            for(int i = 0; i < curr_user->num_connections();i++){
+                if(was_visited(curr_user->get_connection(i),level_)==false){
+                    users.push_back(curr_user);
+                    q.push(curr_user->get_connection(i));
+                    new_visit(curr_user->get_connection(i),level_);
+                    level_num +=1;
+                }
+            }
+        } 
+    }
+    return users;
+}
+
+
+
+
 
 std::vector<int> Network::read_csv_int(std::string filename, int columnIndex, int totalColumns){
     std::vector<int> result;

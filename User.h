@@ -21,7 +21,8 @@ class User{
     User * get_connection(int index);
     int num_connections();
 
-    std::string user_string(); 
+    std::string user_string();
+    
     
 
 
