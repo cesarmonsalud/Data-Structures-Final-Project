@@ -103,8 +103,9 @@ bool Network::was_visited(User* user, int level){
     std::vector<bool> & Vector = user_map_[user];
     if(Vector.empty()){
         return false;
-    }
-    else if(Vector[level]==true){
+    }else if((int(Vector.size())-1)<level){
+        return false;
+    }else if(Vector[level]==true){
         return true;
     }else{
         return false;
@@ -119,7 +120,7 @@ void Network::new_visit(User * user, int level){
     3. Vector already exists for level
     */
     std::vector<bool> & Vector = (user_map_[user]);
-
+    /*
     if(Vector.empty()==true){
         for(int i=0; i<level; i++){
             Vector.push_back(false);
@@ -135,6 +136,15 @@ void Network::new_visit(User * user, int level){
     else{
         Vector[level] = true;
     }
+    */
+   if(int(Vector.size()-1)<level){
+       for(int i = int(int(Vector.size())-1); i <= level ;i++){
+           Vector.push_back(false);
+       }
+       Vector[level] = true; 
+   }else{
+       Vector[level] = true;
+   }
 
 }
 
@@ -305,6 +315,54 @@ std::string Network::shortest_path_string(User * user1, User * user2){
     }
     return result;
 }
+
+int Network::betweeness_centrality(User * user,int depth){
+    std::vector<User*> users = get_connection_level(user,depth);
+
+
+
+    return 0;
+}
+
+std::pair<int, int> Network::paths_through_node(User * start,User * end, User * central){
+    return std::pair<int, int>();
+}
+
+std::vector<User*> Network::get_connection_level(User * user, int depth){
+    std::vector<User*> users;
+    std::queue<User*> q;
+    int level_num = 1;
+    int level_count = 1;
+    User * curr_user = user;
+    q.push(curr_user);
+    new_visit(curr_user,level_);
+
+    for(int x = 0; x<depth ;x++){
+        for(int y = 0; y < level_count; y++){
+            //add a users connections
+            //comback and check if q is empty
+            curr_user = q.front();
+            q.pop();
+            level_num = 0; 
+            for(int i = 0; i < curr_user->num_connections();i++){
+                if(was_visited(curr_user->get_connection(i),level_)==false){
+                    users.push_back(curr_user->get_connection(i));
+                    q.push(curr_user->get_connection(i));
+                    new_visit(curr_user->get_connection(i),level_);
+                    level_num +=1;
+                }
+            }
+        }
+        level_count = level_num;
+        if(q.empty()) return users;
+    }
+    return users;
+}
+
+std::string Network::get_connection_level_string(User * user, int depth){
+    return vector_to_string(get_connection_level(user,depth));
+}
+
 
 
 std::vector<int> Network::read_csv_int(std::string filename, int columnIndex, int totalColumns){
