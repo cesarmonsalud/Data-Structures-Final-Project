@@ -317,9 +317,15 @@ std::string Network::shortest_path_string(User * user1, User * user2){
 }
 
 int Network::betweeness_centrality(User * user,int depth){
-    std::vector<User*> users;
+    std::vector<User*> users = get_connection_level(user,depth);
+
+
 
     return 0;
+}
+
+std::pair<int, int> Network::paths_through_node(User * start,User * end, User * central){
+    return std::pair<int, int>();
 }
 
 std::vector<User*> Network::get_connection_level(User * user, int depth){
@@ -348,6 +354,7 @@ std::vector<User*> Network::get_connection_level(User * user, int depth){
             }
         }
         level_count = level_num;
+        if(q.empty()) return users;
     }
     return users;
 }

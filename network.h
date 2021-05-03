@@ -124,11 +124,21 @@ class Network{
   
     std::string network_string();//turns network into string
 
+    //calculates the betweeness centrality of a user
     int betweeness_centrality(User * user, int sample_size);
 
+    //BFS traversal of graph starting at user, with specified depth
     std::vector<User*> get_connection_level(User * user, int depth);
 
+    //String version of get_connection_level
     std::string get_connection_level_string(User * user, int depth);
+
+    /***
+     * helpter function for betweeness centrality
+     * returns #shortest paths that pass through central 
+     * and #shortest paths total, respectively in a pair
+     */
+    std::pair<int, int> paths_through_node(User * start,User * end, User * central);
 
 
     private:
