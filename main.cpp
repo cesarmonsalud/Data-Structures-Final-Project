@@ -22,7 +22,11 @@ int main(){
     User * central_node = new User();
     User user1 = User(1,"nick",central_node);
     
-    network.populate_tree("names.csv", "musae_git_edges.csv", "targetdata.csv" );
+    //actual data
+    //network.populate_tree("names.csv", "musae_git_edges.csv", "targetdata.csv" );
+
+    //test data
+    network.populate_tree("namesTestData.csv", "edgesTestData.csv", "targetTestData.csv" );
 
     
     /*
@@ -55,21 +59,19 @@ int main(){
     std::cout<< "problem here?" <<std::endl;
     */
 
-    
+    /**
     User * central_node = new User();
-<<<<<<< HEAD
     User new_user = User(12,"bob",central_node);
     new_user.print();
-=======
     User * new_user = new User(12,"bob",central_node);
     std::cout << new_user;
-
     */
+
+    
     //std::cout << new_user.id();
     //std::cout << new_user;
 
 
->>>>>>> 241a51edce1676d622403c04e85bec9b9db77b12
     
 
 
