@@ -10,6 +10,7 @@
         username_ = "";
         central_node_ = NULL;
         connections_ = new std::vector<User*>();
+        betweeness_centrality_ = -1;
     }
 
 
@@ -20,6 +21,7 @@
         username_ = "";
         central_node_ = NULL;
         connections_ = new std::vector<User*>();
+        betweeness_centrality_ = -1;
     }
 
 
@@ -30,6 +32,7 @@
         username_ = username;
         central_node_ = central_node;
         connections_ = new std::vector<User*>();
+        betweeness_centrality_ = -1;
     }
 
 
@@ -82,10 +85,26 @@
         return connections_->size();
     }
 
+    void User::set_centrality(int centrality){
+        if((centrality<10000)&&(centrality>=0)){
+            betweeness_centrality_ = centrality;
+        }
+        return;
+    }
+
+    const std::string User::get_centrality(){
+        return std::to_string(betweeness_centrality_);
+    }
+
+
+
 
     std::string User::user_string(){
         std::string str = "Username: " + get_username() + "\n";
         str += "ID: " + get_id() + "\n" + "Connections: " + "\n";
+        if(betweeness_centrality_!=-1){
+            str += "Betweeness Centrality: " + get_centrality()+ "\n";
+        }
         for(int i = 0; i < int(connections_->size());i++){
             str+= "   "+(*connections_)[i]->get_id() + "\n";
         }

@@ -17,22 +17,18 @@ class User{
 
     const std::string get_id();
     const std::string get_username();
-    std::vector<User*> get_connections();
+    const std::string get_centrality();
     User * get_connection(int index);
+    std::vector<User*> get_connections();
     int num_connections();
-
     std::string user_string();
+    void set_centrality(int centrality);
     
-    
-
-
- 
-    std::string getusername();
-    int getid();
 
     private:
     int id_; 
     std::string username_;
     std::vector<User*> * connections_; 
-    User * central_node_; 
+    User * central_node_;
+    int betweeness_centrality_; //0-10,000 (-1 if none found)
 };
