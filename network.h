@@ -78,13 +78,16 @@ class Network{
      */
     std::vector<User*> BFS_username(std::string query);
 
+    //returns string of users found in BTS username
     std::string BFS_username_string(std::string query);
 
     //helper function for BFS_username to check if string matches username in usermap
     bool name_check(std::string query, User* current_node);
 
+    //turns vector of users into a string
     std::string vector_to_string(std::vector<User*> v);
 
+    //Returns random node
     User* get_random_node();
 
  
@@ -121,8 +124,8 @@ class Network{
 
     //Part #2
     
-  
-    std::string network_string();//turns network into string
+    //turns network into string
+    std::string network_string();
 
     //calculates the betweeness centrality of a user
     int betweeness_centrality(User * user, int depth);
@@ -137,78 +140,26 @@ class Network{
      * helpter function for betweeness centrality
      * returns #shortest paths that pass through central 
      * and #shortest paths total, respectively in a pair
-     * void bfs(vector<int> adj[],
-         vector<int> parent[],
-         int n, int start)
-{
-    // dist will contain shortest distance
-    // from start to every other vertex
-    vector<int> dist(n, INT_MAX);
- 
-    queue<int> q;
- 
-    // Insert source vertex in queue and make
-    // its parent -1 and distance 0
-    q.push(start);
-    parent[start] = { -1 };
-    dist[start] = 0;
- 
-    // Untill Queue is empty
-    while (!q.empty()) {
-        int u = q.front();
-        q.pop();
-        for (int v : adj[u]) {
-            if (dist[v] > dist[u] + 1) {
- 
-                // A shorter distance is found
-                // So erase all the previous parents
-                // and insert new parent u in parent[v]
-                dist[v] = dist[u] + 1;
-                q.push(v);
-                parent[v].clear();
-                parent[v].push_back(u);
-            }
-            else if (dist[v] == dist[u] + 1) {
- 
-                // Another candidate parent for
-                // shortes path found
-                parent[v].push_back(u);
-            }
-        }
-    }
-}
+     * psuedocode found at: https://www.geeksforgeeks.org/print-all-shortest-paths-between-given-source-and-destination-in-an-undirected-graph/
      */
     std::pair<int, int> paths_through_node(User * start,User * end, User * central);
 
 
     /***
-     * void find_paths(vector<vector<int> >& paths,
-                vector<int>& path,
-                vector<int> parent[],
-                int n, int u)
-     * if (u == -1) {
-        paths.push_back(path);
-        return;
-    }
- 
-    // Loop for all the parents
-    // of the given vertex
-    for (int par : parent[u]) {
- 
-        // Insert the current
-        // vertex in path
-        path.push_back(u);
- 
-        // Recursive call for its parent
-        find_paths(paths, path, parent,
-                   n, par);
- 
-        // Remove the current vertex
-        path.pop_back();
-    }
+     *helper function for paths through node
+     *psuedocode found at: https://www.geeksforgeeks.org/print-all-shortest-paths-between-given-source-and-destination-in-an-undirected-graph/
      */
     //[thru paths, paths, seen(1 or 0)]
     std::vector<int> backtrace_(std::unordered_map<User*,std::vector<User*>> & previos, User * curr_user, User * central);
+
+    /***
+     * updates betweeness centrality of all of the nodes in the network
+     * not optomized for time complexity, 
+     * not one of the promised functions
+     */
+    void network_betweeness_centrality(int depth);
+    
+
     private:
     std::unordered_map<int,User*> id_map_;
     std::unordered_map<User*,std::vector<bool>> user_map_;

@@ -15,6 +15,7 @@ Network::Network(){
     user_map_ = std::unordered_map<User*,std::vector<bool>>();
     central_node_ = new User();
     level_ = 0;
+    total_nodes_ = 0; 
 }
 
 Network::~Network(){
@@ -57,8 +58,6 @@ void Network::populate_tree(std::string filename_target_name, std::string filena
 
     //while there are still edges get a new line
     //add_edge(13939,383839);
-
-
     return;
 }
 
@@ -77,6 +76,7 @@ void Network::create_user_(int id, std::string username){
     std::pair<User*,std::vector<bool>> userPair(newUser,std::vector<bool>()); // creates user_map_ 
     user_map_.insert(userPair);
     id_map_.insert(newPair);
+    total_nodes_+=1;
 }
 
 int Network::add_edge(int id_1, int id_2){
@@ -227,7 +227,6 @@ User* Network::get_random_node(){
 }
     
 std::vector<User*> Network::shortest_path(User * user1, User * user2){
-    //initialize distances?
     std::unordered_map<User*,int> distance_map;
     std::unordered_map<User*,User*> previos; //Syntax <*current_user,*previos_user>
     auto compare = [](std::pair<User*,int> a,std::pair<User*,int> b) { return a.second < b.second; }; //create comparator
@@ -320,6 +319,13 @@ std::string Network::shortest_path_string(User * user1, User * user2){
     return result;
 }
 
+void Network::network_betweeness_centrality(int depth){
+    for(auto user: id_map_){
+        betweeness_centrality(user.second,depth);
+    }
+}
+
+
 int Network::betweeness_centrality(User * user,int depth){
     std::vector<User*> users = get_connection_level(user,depth);
     int thru_paths = 0;
@@ -333,8 +339,10 @@ int Network::betweeness_centrality(User * user,int depth){
     }
     //make case to check if 0 for total_paths or thru paths
     //multiply by normalization connstance
-    double normalization_const = ((2/(total_nodes_-2))*(total_nodes_-1));
-    return int(normalization_const*(thru_paths/total_paths)*1000);
+    double normalization_const = ((1.0/double(total_nodes_-2))*(1.0/double(total_nodes_-1))*10000*(2.0));
+    user->set_centrality(int((double(thru_paths)/double(total_paths))*normalization_const)); //sets centrality of user
+    return int((double(thru_paths)/double(total_paths))*normalization_const);
+    //int(normalization_const*(thru_paths/total_paths)*1000);
 }
 
 std::pair<int, int> Network::paths_through_node(User * start,User * end, User * central){
@@ -437,8 +445,12 @@ std::vector<User*> Network::get_connection_level(User * user, int depth){
             }
         }
         level_count = level_num;
-        if(q.empty()) return users;
+        if(q.empty()){
+            level_++;
+            return users;
+        } 
     }
+    level_++;
     return users;
 }
 
