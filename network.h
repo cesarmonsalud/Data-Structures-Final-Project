@@ -125,7 +125,7 @@ class Network{
     std::string network_string();//turns network into string
 
     //calculates the betweeness centrality of a user
-    int betweeness_centrality(User * user, int sample_size);
+    int betweeness_centrality(User * user, int depth);
 
     //BFS traversal of graph starting at user, with specified depth
     std::vector<User*> get_connection_level(User * user, int depth);
@@ -137,14 +137,83 @@ class Network{
      * helpter function for betweeness centrality
      * returns #shortest paths that pass through central 
      * and #shortest paths total, respectively in a pair
+     * void bfs(vector<int> adj[],
+         vector<int> parent[],
+         int n, int start)
+{
+    // dist will contain shortest distance
+    // from start to every other vertex
+    vector<int> dist(n, INT_MAX);
+ 
+    queue<int> q;
+ 
+    // Insert source vertex in queue and make
+    // its parent -1 and distance 0
+    q.push(start);
+    parent[start] = { -1 };
+    dist[start] = 0;
+ 
+    // Untill Queue is empty
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+        for (int v : adj[u]) {
+            if (dist[v] > dist[u] + 1) {
+ 
+                // A shorter distance is found
+                // So erase all the previous parents
+                // and insert new parent u in parent[v]
+                dist[v] = dist[u] + 1;
+                q.push(v);
+                parent[v].clear();
+                parent[v].push_back(u);
+            }
+            else if (dist[v] == dist[u] + 1) {
+ 
+                // Another candidate parent for
+                // shortes path found
+                parent[v].push_back(u);
+            }
+        }
+    }
+}
      */
     std::pair<int, int> paths_through_node(User * start,User * end, User * central);
 
 
+    /***
+     * void find_paths(vector<vector<int> >& paths,
+                vector<int>& path,
+                vector<int> parent[],
+                int n, int u)
+     * if (u == -1) {
+        paths.push_back(path);
+        return;
+    }
+ 
+    // Loop for all the parents
+    // of the given vertex
+    for (int par : parent[u]) {
+ 
+        // Insert the current
+        // vertex in path
+        path.push_back(u);
+ 
+        // Recursive call for its parent
+        find_paths(paths, path, parent,
+                   n, par);
+ 
+        // Remove the current vertex
+        path.pop_back();
+    }
+     */
+    //[thru paths, paths, seen(1 or 0)]
+    std::vector<int> backtrace_(std::unordered_map<User*,std::vector<User*>> & previos, User * curr_user, User * central);
     private:
     std::unordered_map<int,User*> id_map_;
     std::unordered_map<User*,std::vector<bool>> user_map_;
     int level_;
+    int total_nodes_;
     User * central_node_;
 
     

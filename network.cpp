@@ -207,7 +207,11 @@ std::string Network::vector_to_string(std::vector<User*> v){
 
     std::string result = "";
     for(unsigned long i=0; i<v.size(); i++){
-        result += v[i]->user_string();
+        if(v[i]!=NULL){
+            result += v[i]->user_string();
+        }else{
+            result += "NuLL \n";
+        }
     }
     return result;
 }
@@ -318,15 +322,94 @@ std::string Network::shortest_path_string(User * user1, User * user2){
 
 int Network::betweeness_centrality(User * user,int depth){
     std::vector<User*> users = get_connection_level(user,depth);
-
-
-
-    return 0;
+    int thru_paths = 0;
+    int total_paths = 0; 
+    for(int x = 0; x < int(users.size());x++){
+        for(int y = x+1; y < int(users.size());y++){//can optomize which users are iterated through so iteration does not happen twice
+            std::pair<int, int> result = paths_through_node(users[x],users[y],user);
+            thru_paths += result.first;
+            total_paths += result.second;
+        }
+    }
+    //make case to check if 0 for total_paths or thru paths
+    //multiply by normalization connstance
+    double normalization_const = ((2/(total_nodes_-2))*(total_nodes_-1));
+    return int(normalization_const*(thru_paths/total_paths)*1000);
 }
 
 std::pair<int, int> Network::paths_through_node(User * start,User * end, User * central){
-    return std::pair<int, int>();
+    //start
+    std::unordered_map<User*,int> distance_map;
+    std::unordered_map<User*,std::vector<User*>> previos; //Syntax <*current_user,*previos_user>
+    std::queue<User*> q;
+    User * curr_user;
+    User * neighbor;
+
+    //check for improper parameters
+    if(start==NULL || end==NULL) return std::pair<int, int>(0,0);
+    if(start==end) return std::pair<int, int>(0,0);
+    if(start->get_connections().empty() || end->get_connections().empty()) return std::pair<int, int>();
+
+    //initialize first element
+    q.push(start);
+    previos[start].push_back(NULL);
+    std::pair<User*,int> newPair(start,0);
+    distance_map.insert(newPair);
+
+    while (!q.empty()){
+        User * curr_user = q.front();
+        q.pop();
+        for(int i = 0; i < curr_user->num_connections();i++){
+            neighbor = curr_user->get_connection(i);
+            if(distance_map.find(neighbor)==distance_map.end()){//check if the neighbor does not have a distance
+                distance_map[neighbor] = distance_map[curr_user] + 1;
+                q.push(neighbor);
+                previos[neighbor].clear();
+                previos[neighbor].push_back(curr_user);
+            }
+            else if(distance_map[neighbor] > distance_map[curr_user] +1){
+                distance_map[neighbor] = distance_map[curr_user] + 1;
+                q.push(neighbor);
+                previos[neighbor].clear();
+                previos[neighbor].push_back(curr_user);
+            }else if(distance_map[neighbor] == distance_map[curr_user] + 1){
+                previos[neighbor].push_back(curr_user);
+            }
+        }
+    }
+
+    //backtracing
+    //std::pair<User*,int> newPair(user1,0);
+    std::vector<int> result = backtrace_(previos,end,central);
+    return std::make_pair(result[0],result[1]);
 }
+
+
+std::vector<int> Network::backtrace_(std::unordered_map<User*,std::vector<User*>> & previos, User * curr_user, User * central){
+    std::vector<int> result = {0,0,0};
+
+    if (curr_user == NULL){
+        result[0] = 0; //paths that go through the node
+        result[1] = 1; //total paths
+        return result;
+    }
+
+    for(int i = 0; i < int(previos[curr_user].size());i++){
+        std::vector<int> temp = backtrace_(previos,previos[curr_user].at(i),central);
+        if(curr_user == central){
+            result[0] +=temp[1];
+            result[2] = 1;
+        }
+        else if((temp[2] == 1)||(curr_user==central)){
+            result[0] += temp[0];
+            result[2]  = 1; // set that the node has been visited
+        }
+        result[1] += temp[1];
+    }
+    return result;
+}
+
+
 
 std::vector<User*> Network::get_connection_level(User * user, int depth){
     std::vector<User*> users;
