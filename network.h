@@ -122,6 +122,8 @@ class Network{
 
     std::vector<std::string> read_csv_string(std::string filename);
 
+    int getTotalNodes();
+
     //Part #2
     
     //turns network into string

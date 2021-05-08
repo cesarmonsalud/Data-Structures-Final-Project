@@ -37,6 +37,10 @@ Network::~Network(){
     //update destructor with each user
 }
 
+int Network::getTotalNodes(){
+    return total_nodes_;
+}
+
 void Network::populate_tree(std::string filename_target_name, std::string filename_edges, std::string filename_target_id){
     //open csv file with user info
     //Edit these files to do the right thing
@@ -308,8 +312,13 @@ std::vector<User*> Network::shortest_path(User * user1, User * user2){
 std::string Network::shortest_path_string(User * user1, User * user2){
     std::string result = "";
     std::vector<User*> path = shortest_path(user1,user2);
-    result += "Distance: " + std::to_string(path.size()) + "\n";
-    result += "Path: ";
+    //Added case where there is no path;
+    if(path.size()==0){
+        result += "There are no path between the two!";
+    }else{
+        result += "Distance: " + std::to_string(path.size()) + "\n";
+        result += "Path: ";
+    }
     for(unsigned long i = 0; i < path.size(); i++){
         result+= path[i]->get_username();
         if(i!=(path.size()-1)){
@@ -459,7 +468,7 @@ std::string Network::get_connection_level_string(User * user, int depth){
 }
 
 
-
+//code inspired by https://www.gormanalysis.com/blog/reading-and-writing-csv-files-with-cpp/
 std::vector<int> Network::read_csv_int(std::string filename, int columnIndex, int totalColumns){
     std::vector<int> result;
     // Create an input filestream
@@ -512,6 +521,7 @@ std::vector<int> Network::read_csv_int(std::string filename, int columnIndex, in
 
 }
 
+//code inspired by https://www.gormanalysis.com/blog/reading-and-writing-csv-files-with-cpp/
 std::vector<std::string> Network::read_csv_string(std::string filename){
     std::vector<std::string> result;
     // Create an input filestream

@@ -62,6 +62,13 @@
         "strstream": "c",
         "system_error": "c",
         "typeindex": "c",
-        "__nullptr": "c"
+        "__nullptr": "c",
+        "__tree": "cpp",
+        "iomanip": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "cfenv": "cpp",
+        "cinttypes": "cpp"
     }
 }
