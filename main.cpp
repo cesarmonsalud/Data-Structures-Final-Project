@@ -72,7 +72,7 @@ void userInterface(){
 
         //The meat and potatoes of the User Interface
         std::string commandSelection = "-1";
-        while(commandSelection != "6"){
+        while(commandSelection != "7"){
             std::cout << "Which command would you like to execute?" << std::endl << std::endl;
 
 
@@ -84,7 +84,8 @@ void userInterface(){
             std::cout << "3: Insert new User" << std::endl;
             std::cout << "4: Add edge to User" << std::endl;
             std::cout << "5: Find shortest path between two Users" << std::endl;
-            std::cout << "6: Return to database selection" << std::endl << std::endl;
+            std::cout << "6: Calculate the centrality of a User" << std::endl;
+            std::cout << "7: Return to database selection" << std::endl << std::endl;
 
 
             //Selects commands
@@ -210,9 +211,44 @@ void userInterface(){
                     }
                 }
             }
+
+            //Calculates centrality
+            else if(commandSelection == "6"){
+                std::string selectedUserIdString = "-1";
+                std::string selectedDepthString = "-1";
+                int firstUserId = -1;
+                while(true){
+                    std::cout << "Input the first User Id" << std::endl << std::endl;
+                    std::cin >> selectedUserIdString;
+                    int selectedUserIdInt = stringToInt(selectedUserIdString);
+                    std::cout << std::endl;
+                    if(selectedUserIdInt >= 0 && selectedUserIdInt < network.getTotalNodes()){
+                        std::cout << "User Id selected:" <<std::endl;
+                        print(network.search_by_id(selectedUserIdInt));
+                        firstUserId = selectedUserIdInt;
+                        break;
+                    }else{
+                        std::cout << "Invalid User Id, please try again!" <<std::endl <<std::endl;
+                    }
+                }
+                while(true){
+                    std::cout << "Input a depth" << std::endl << std::endl;
+                    std::cin >> selectedDepthString;
+                    int selectedUserIdInt = stringToInt(selectedUserIdString);
+                    int selectedInt = stringToInt(selectedDepthString);
+                    std::cout << std::endl;
+                    if(selectedInt >= 1){
+                        std::cout << "The centrality of the user is: " << network.betweeness_centrality(network.search_by_id(selectedUserIdInt),selectedInt)<<std::endl;
+                        std::cout << std::endl << "Command Successful!" << std::endl <<std::endl;
+                        break;
+                    }else{
+                        std::cout << "Invalid integer, please try again!" <<std::endl <<std::endl;
+                    }
+                }
+            }
             
             //Returns to Database Selection
-            else if(commandSelection == "6"){
+            else if(commandSelection == "7"){
                 break;
             }
             
