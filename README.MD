@@ -18,3 +18,6 @@ When running our program through the UI you can choose to run the program with a
 
 Presentation:
 https://www.youtube.com/watch?v=SgpLOTEVqbg
+
+Final Write-up: 
+Included in FINALWRITEUP.MD
