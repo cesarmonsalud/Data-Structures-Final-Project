@@ -15,3 +15,6 @@ How to test our code:
 Testing all of our functions is as simple as running our make file and then running the main file. Once the main file is run, the user will be greeted with a variety of options. Depending on what the user wants to test, all they have to do is type in the number cooresponding to said action and hit enter.
 
 When running our program through the UI you can choose to run the program with a testdataset that corresponds to a JPG called ____________ which is a graphical representation of the data loaded into the program. You can cross check the output of the program with this graph. 
+
+Presentation:
+https://www.youtube.com/watch?v=SgpLOTEVqbg
