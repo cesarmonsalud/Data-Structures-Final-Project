@@ -4,9 +4,11 @@ Code Organization:
 
 Our code is oragnized into 3 seperate groups of files:
  
-User.h/cpp: Stores all information and functions relating to a User. Contains the User class and other helper functions.
-Network.h/cpp: Stores all functions and variables relating to the network of users. Contains the network class and our 3 main functions.
-main.cpp: Contains the code to our user interface. Can run all of our functions with test data by running the main file and following the instructions in the interface.
+ User.h/cpp: Stores all information and functions relating to a User. Contains the User class and other helper functions.
+
+ Network.h/cpp: Stores all functions and variables relating to the network of users. Contains the network class and our 3 main functions.
+
+ main.cpp: Contains the code to our user interface. Can run all of our functions with test data by running the main file and following the instructions in the   interface.
  
 How to test our code:
 
